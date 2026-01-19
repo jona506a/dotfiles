@@ -1,0 +1,70 @@
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# SSH
+eval `ssh-agent -s`
+ssh-add ~/.ssh/id_rsa
+
+# Aliases
+if [ -f ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
+
+function t () {
+    git checkout dev
+    git pull
+    if [[ $# -gt 0 && $1 = "merge" ]]; then
+        git merge -
+        git push
+        git checkout -
+    fi
+}
+
+alias ll='ls -alF --color=auto'
+alias la='ls -A --color=auto'
+alias l='ls -CF --color=auto'
+alias zrc='nano ~/.zshrc'
+alias zourc='source ~/.zshrc'
+alias ga='git add . -v'
+alias gz='git stash'
+alias gza='git stash apply'
+alias gdh='git diff HEAD'
+alias gs='git status'
+alias gsw='git switch '
+alias gswp='git switch prod'
+alias gswd='git switch dev'
+alias gsw-='git switch -'
+alias gswc='git switch -c'
+alias gcm='git commit -m'
+alias gg='git pull'
+alias gp='git push'
+alias gpf='git push --force-with-lease'
+alias gr='git rebase'
+alias art='dev php artisan'
+alias up='dev up'
+alias cd20='cd ~/cv-developer/projects/twenty'
+alias cdup='cd ~/cv-developer/projects/twenty && dev up'
+alias down='dev down'
+alias js='dev npm run dev'
+alias vue='dev npm run vue'
+alias cdv='cd ~/cv-developer/projects/twenty && vue'
+
+# Keybinds
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
+# History
+SAVEHIST=1000  # Save most-recent 1000 lines
+HISTFILE=~/.zsh_history
+
+# PATH
+export PATH="$HOME/.yarn/bin:$PATH"
+export PATH="$HOME/.nvm/versions/node/$(nvm current)/bin:$PATH"
+
+# Starship
+eval "$(starship init zsh)"
+
+# zsh-suggestions
+# echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ${ZSOTDIR:-$HOME}/.zshrc
